@@ -4,6 +4,10 @@
  * Created by alykoshin on 4/5/14.
  */
 
+if ( typeof module !== 'undefined' && typeof require !== 'undefined') {
+  var Emitter = require('mini-emitter');
+}
+
 /**
  * Object to manage Full Screen mode
  *
@@ -14,6 +18,7 @@
 var FullScreen = function() {
 
   var self = this;
+  Emitter(self);
 
   /**
    *
@@ -21,6 +26,7 @@ var FullScreen = function() {
    */
   function onFullScreenChange(evt) {
     console.log('FullScreen: onFullScreenChange(): evt:', evt );
+    self.emit('change', evt);
 
     /** Need to change class for the button wrtcOn <-> wrtcOff
      * we'll do it for ALL buttons - anyway, we do not see all of them...
@@ -35,6 +41,7 @@ var FullScreen = function() {
 
   function onFullScreenError(evt) {
     console.log('FullScreen: onFullScreenError(): evt:', evt );
+    self.emit('error', evt);
   }
 
   [
@@ -55,68 +62,64 @@ var FullScreen = function() {
       document.addEventListener(item, onFullScreenError);
     });
 
-  //document.addEventListener('fullscreenchange',       onFullScreenChange);
-  //document.addEventListener('msfullscreenchange',     onFullScreenChange);
-  //document.addEventListener('mozfullscreenchange',    onFullScreenChange);
-  //document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+  //document.addEventListener('fullscreenchange',       onFullScreenError);
+  //document.addEventListener('msfullscreenchange',     onFullScreenError);
+  //document.addEventListener('mozfullscreenchange',    onFullScreenError);
+  //document.addEventListener('webkitfullscreenchange', onFullScreenError);
 
   /**
    * Start Full Screen Mode
+   * https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
    *
    * @param htmlElement - HTML Element to be shown on full screen
+   * @returns {boolean}
    */
   self.start = function (htmlElement) {
     console.log('miniFullScreen: self.start():');
     //var res = true;
-    var res = false;
+    var res = true;
 //          assert(element === null, 'Full Screen is already activated.');
-    [
-      'requestFullScreen',
-      'msRequestFullscreen',
-      'mozRequestFullScreen',
-      'webkitRequestFullScreen'
-    ].forEach( function(item, index, array) {
-        if (htmlElement[item]) { htmlElement[item](); res = true; }
-      } );
-    //if      (htmlElement.requestFullScreen)       { htmlElement.requestFullScreen();       }
-    //else if (htmlElement.msRequestFullscreen)     { htmlElement.msRequestFullscreen();     }
-    //else if (htmlElement.mozRequestFullScreen)    { htmlElement.mozRequestFullScreen();    }
-    //else if (htmlElement.webkitRequestFullScreen) { htmlElement.webkitRequestFullScreen(); }//Element.ALLOW_KEYBOARD_INPUT); }
-    //else { result = false; }
+//    [
+//      'requestFullscreen',
+//      'msRequestFullscreen',
+//      'mozRequestFullScreen',
+//      'webkitRequestFullscreen'
+//    ].forEach( function(item, index, array) {
+//        if (htmlElement[item]) { htmlElement[item](); res = true; }
+//      } );
+    if      (htmlElement.requestFullScreen)       { htmlElement.requestFullscreen();       }
+    else if (htmlElement.msRequestFullscreen)     { htmlElement.msRequestFullscreen();     }
+    else if (htmlElement.mozRequestFullScreen)    { htmlElement.mozRequestFullScreen();    }
+    else if (htmlElement.webkitRequestFullScreen) { htmlElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT); }
+    else { res = false; }
     return res;
   };
 
   /**
    * Stop Full Screen Mode
+   * https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+   * https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Using_full_screen_mode
+   *
+   * @returns {boolean}
    */
   self.stop = function () {
     console.log('miniFullScreen: self.stop():');
-    var result = true;
+    var res = true;
 //          assert(element !== null, 'Full Screen was not activated.');
 //          assert( elem!==undefined && element !== elem, 'Full Screen activated for other element.');
-    if      (document.cancelFullScreen)       { document.cancelFullScreen();       }
-    else if (document.msCancelFullScreen)     { document.msCancelFullScreen();     }
+    if      (document.exitFullscreen)         { document.exitFullscreen();       }
+    else if (document.msExitFullscreen)       { document.msExitFullscreen();     }
     else if (document.mozCancelFullScreen)    { document.mozCancelFullScreen();    }
-    else if (document.webkitCancelFullScreen) { document.webkitCancelFullScreen(); }
-    else { result = false; }
-    return result;
-    /*      // https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Using_full_screen_mode
-     if (document.exitFullscreen) {
-     document.exitFullscreen();
-     } else if (document.msExitFullscreen) {
-     document.msExitFullscreen();
-     } else if (document.mozCancelFullScreen) {
-     document.mozCancelFullScreen();
-     } else if (document.webkitExitFullscreen) {
-     document.webkitExitFullscreen();
-     }*/
+    else if (document.webkitExitFullscreen)   { document.webkitExitFullscreen(); }    // also webkitCancelFullScreen
+    else { res = false; }
+    return res;
   };
 
   /**
-   * Check whether some HTML element currently is in full screen mode
+   * Check document currently supports full screen mode
    * Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/Document/mozFullScreenEnabled
    *
-   * @returns {boolean} - true if some HTML element currently is in full screen mode, false otherwise
+   * @returns {boolean} - true if document currently supports full screen mode, false otherwise
    */
   self.getEnabled = function () {
     return !!(
@@ -131,6 +134,7 @@ var FullScreen = function() {
   /**
    * Check whether some HTML element currently is in full screen mode
    * Mozilla: https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Using_full_screen_mode
+   * also (older): https://developer.mozilla.org/en-US/docs/Web/API/Document/mozFullScreen
    *
    * @returns {boolean} - true if some HTML element currently is in full screen mode, false otherwise
    */
@@ -144,10 +148,12 @@ var FullScreen = function() {
    * @returns {*}
    */
   self.getElement = function () {
-    return document.fullscreenElement ||
+    return (
+      document.fullscreenElement ||
       document.msFullscreenElement ||
-      document.mozFullscreenElement ||
-      document.webkitFullscreenElement;
+      document.mozFullScreenElement ||
+      document.webkitFullscreenElement
+    );
   };
 
   /**
