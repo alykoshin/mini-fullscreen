@@ -12,8 +12,12 @@ Mini wrapper for browser Fullscreen API
 https://fullscreen.spec.whatwg.org/
 https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 
+This package is part of WRTC project.
+
+Not yet ready for public use.
 
 If you have different needs regarding the functionality, please add a [feature request](https://github.com/alykoshin/mini-fullscreen/issues).
+
 
 ## Installation
 
@@ -23,8 +27,14 @@ npm install --save mini-fullscreen
 
 ## Usage
 
+This package is part of WRTC project.
+
+Not yet ready for public use.
+
+
 ## Credits
 [Alexander](https://github.com/alykoshin/)
+
 
 ## License
 

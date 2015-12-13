@@ -66,6 +66,7 @@ var FullScreen = function() {
    * @param htmlElement - HTML Element to be shown on full screen
    */
   self.start = function (htmlElement) {
+    console.log('miniFullScreen: self.start():');
     //var res = true;
     var res = false;
 //          assert(element === null, 'Full Screen is already activated.');
@@ -89,6 +90,7 @@ var FullScreen = function() {
    * Stop Full Screen Mode
    */
   self.stop = function () {
+    console.log('miniFullScreen: self.stop():');
     var result = true;
 //          assert(element !== null, 'Full Screen was not activated.');
 //          assert( elem!==undefined && element !== elem, 'Full Screen activated for other element.');
@@ -112,15 +114,28 @@ var FullScreen = function() {
 
   /**
    * Check whether some HTML element currently is in full screen mode
+   * Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/Document/mozFullScreenEnabled
    *
    * @returns {boolean} - true if some HTML element currently is in full screen mode, false otherwise
    */
   self.getEnabled = function () {
-    return !!(document.fullscreenEnabled ||
-    document.msFullscreenEnabled ||
-    document.mozFullscreenEnabled ||
-    document.webkitIsFullScreen);
+    return !!(
+      document.fullscreenEnabled ||
+      document.msFullscreenEnabled  ||
+      document.mozFullScreenEnabled ||
+      document.webkitFullscreenEnabled
+    );
     /** https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Using_full_screen_mode **/
+  };
+
+  /**
+   * Check whether some HTML element currently is in full screen mode
+   * Mozilla: https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Using_full_screen_mode
+   *
+   * @returns {boolean} - true if some HTML element currently is in full screen mode, false otherwise
+   */
+  self.getActive = function () {
+    return !! self.getElement();
   };
 
   /**
@@ -141,7 +156,8 @@ var FullScreen = function() {
    * @param htmlElement
    */
   self.toggle = function(htmlElement) {
-    if ( ! self.getEnabled() ) {
+    console.log('miniFullScreen: self.toggle(): self.getActive():', self.getActive());
+    if ( ! self.getActive() ) {
       return self.start(htmlElement);
     } else {
       return self.stop();
