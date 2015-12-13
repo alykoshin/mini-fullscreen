@@ -9,6 +9,9 @@
 
 Mini wrapper for browser Fullscreen API
 
+https://fullscreen.spec.whatwg.org/
+https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+
 
 If you have different needs regarding the functionality, please add a [feature request](https://github.com/alykoshin/mini-fullscreen/issues).
 
