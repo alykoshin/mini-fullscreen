@@ -1,6 +1,6 @@
 {
   "name": "mini-fullscreen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mini wrapper for browser Fullscreen API",
   "main": "app/index.js",
   "scripts": {
