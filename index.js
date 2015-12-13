@@ -25,22 +25,12 @@ var FullScreen = function() {
    * @param evt
    */
   function onFullScreenChange(evt) {
-    console.log('FullScreen: onFullScreenChange(): evt:', evt );
+    //console.log('FullScreen: onFullScreenChange(): evt:', evt );
     self.emit('change', evt);
-
-    /** Need to change class for the button wrtcOn <-> wrtcOff
-     * we'll do it for ALL buttons - anyway, we do not see all of them...
-     */
-    var elements = document.getElementsByClassName('wrtcFullScreen');
-
-    /** @type {number} **/
-    for (var i=0; i < elements.length; i++) {
-      elementFlipOnOff(elements[i]);
-    }
   }
 
   function onFullScreenError(evt) {
-    console.log('FullScreen: onFullScreenError(): evt:', evt );
+    //console.log('FullScreen: onFullScreenError(): evt:', evt );
     self.emit('error', evt);
   }
 
@@ -62,10 +52,10 @@ var FullScreen = function() {
       document.addEventListener(item, onFullScreenError);
     });
 
-  //document.addEventListener('fullscreenchange',       onFullScreenError);
-  //document.addEventListener('msfullscreenchange',     onFullScreenError);
-  //document.addEventListener('mozfullscreenchange',    onFullScreenError);
-  //document.addEventListener('webkitfullscreenchange', onFullScreenError);
+  document.addEventListener('fullscreenchange',       onFullScreenError);
+  document.addEventListener('msfullscreenchange',     onFullScreenError);
+  document.addEventListener('mozfullscreenchange',    onFullScreenError);
+  document.addEventListener('webkitfullscreenchange', onFullScreenError);
 
   /**
    * Start Full Screen Mode
@@ -75,18 +65,9 @@ var FullScreen = function() {
    * @returns {boolean}
    */
   self.start = function (htmlElement) {
-    console.log('miniFullScreen: self.start():');
-    //var res = true;
+    //console.log('miniFullScreen: self.start():');
+//          assert(!self.getEnabled(), 'Full Screen is already activated.');
     var res = true;
-//          assert(element === null, 'Full Screen is already activated.');
-//    [
-//      'requestFullscreen',
-//      'msRequestFullscreen',
-//      'mozRequestFullScreen',
-//      'webkitRequestFullscreen'
-//    ].forEach( function(item, index, array) {
-//        if (htmlElement[item]) { htmlElement[item](); res = true; }
-//      } );
     if      (htmlElement.requestFullScreen)       { htmlElement.requestFullscreen();       }
     else if (htmlElement.msRequestFullscreen)     { htmlElement.msRequestFullscreen();     }
     else if (htmlElement.mozRequestFullScreen)    { htmlElement.mozRequestFullScreen();    }
@@ -102,14 +83,14 @@ var FullScreen = function() {
    *
    * @returns {boolean}
    */
-  self.stop = function () {
-    console.log('miniFullScreen: self.stop():');
+  self.stop = function (htmlElement) {
+    //console.log('miniFullScreen: self.stop():');
+//          assert(self.getEnabled(), 'Full Screen was not activated.');
+//          assert(htmlElement && (self.getElement() !== htmlElement), 'Full Screen activated for other element.');
     var res = true;
-//          assert(element !== null, 'Full Screen was not activated.');
-//          assert( elem!==undefined && element !== elem, 'Full Screen activated for other element.');
     if      (document.exitFullscreen)         { document.exitFullscreen();       }
     else if (document.msExitFullscreen)       { document.msExitFullscreen();     }
-    else if (document.mozCancelFullScreen)    { document.mozCancelFullScreen();    }
+    else if (document.mozCancelFullScreen)    { document.mozCancelFullScreen();  }
     else if (document.webkitExitFullscreen)   { document.webkitExitFullscreen(); }    // also webkitCancelFullScreen
     else { res = false; }
     return res;
@@ -162,7 +143,7 @@ var FullScreen = function() {
    * @param htmlElement
    */
   self.toggle = function(htmlElement) {
-    console.log('miniFullScreen: self.toggle(): self.getActive():', self.getActive());
+    //console.log('miniFullScreen: self.toggle(): self.getActive():', self.getActive());
     if ( ! self.getActive() ) {
       return self.start(htmlElement);
     } else {
