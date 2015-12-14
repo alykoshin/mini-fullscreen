@@ -1,9 +1,12 @@
 [![npm version](https://badge.fury.io/js/mini-fullscreen.svg)](http://badge.fury.io/js/mini-fullscreen)
 [![Build Status](https://travis-ci.org/alykoshin/mini-fullscreen.svg)](https://travis-ci.org/alykoshin/mini-fullscreen)
 [![Coverage Status](http://coveralls.io/repos/alykoshin/mini-fullscreen/badge.svg?branch=master&service=github)](http://coveralls.io/github/alykoshin/mini-fullscreen?branch=master)
+[![Code Climate](https://codeclimate.com/github/alykoshin/mini-fullscreen/badges/gpa.svg)](https://codeclimate.com/github/alykoshin/mini-fullscreen)
+[![Inch CI](http://inch-ci.org/github/alykoshin/mini-fullscreen.svg?branch=master)](http://inch-ci.org/github/alykoshin/mini-fullscreen)
 
 [![Dependency Status](https://david-dm.org/alykoshin/mini-fullscreen/status.svg)](https://david-dm.org/alykoshin/mini-fullscreen#info=dependencies)
 [![devDependency Status](https://david-dm.org/alykoshin/mini-fullscreen/dev-status.svg)](https://david-dm.org/alykoshin/mini-fullscreen#info=devDependencies)
+
 
 # mini-fullscreen
 
@@ -24,6 +27,7 @@ If you have different needs regarding the functionality, please add a [feature r
 ```sh
 npm install --save mini-fullscreen
 ```
+
 
 ## Usage
 
