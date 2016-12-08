@@ -2,14 +2,14 @@
   "name": "mini-fullscreen",
   "version": "0.0.8",
   "description": "Mini wrapper for browser Fullscreen API",
-  "main": "app/index.js",
+  "main": "./index.js",
   "scripts": {
     "lint": "eslint -f unix .",
     "inspect": "jsinspect",
     "pretest": "npm run lint && npm run inspect",
     "test": "echo \"Warning: no test specified\" && exit 0",
     "__test": "echo \"Error: no test specified\" && exit 1",
-    "_test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
+    "_test": "node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "_commit": "git commit -am \"commit by 'npm run commit'\"",
     "_push": "git push --follow-tags",
@@ -39,13 +39,13 @@
     "mini-emitter": "0.0.3"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "coveralls": "^2.11.6",
-    "eslint": "^1.10.3",
-    "istanbul": "^0.4.1",
-    "jshint": "^2.9.1-rc1",
-    "jsinspect": "^0.7.2",
-    "mocha": "^2.3.4",
-    "mockery": "^1.4.0"
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.11.1",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.9.4",
+    "jsinspect": "^0.8.0",
+    "mocha": "^3.2.0",
+    "mockery": "^2.0.0"
   }
 }

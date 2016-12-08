@@ -12,8 +12,8 @@
 
 Mini wrapper for browser Fullscreen API
 
-https://fullscreen.spec.whatwg.org/
-https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+- https://fullscreen.spec.whatwg.org/
+- https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 
 This package is part of WRTC project.
 
@@ -34,6 +34,49 @@ npm install --save mini-fullscreen
 This package is part of WRTC project.
 
 Not yet ready for public use.
+
+```js
+var miniFullScreen = require('mini-fullscreen');
+
+
+function printStatus(result) {
+  console.log('result:', result);
+  console.log('miniFullScreen.getEnabled():', miniFullScreen.getEnabled());
+  console.log('miniFullScreen.getActive():',  miniFullScreen.getActive());
+  console.log('miniFullScreen.getElement():', miniFullScreen.getElement());
+}
+
+function init() {
+  var htmlElement = document.getElementById('full-element');
+
+  miniFullScreen.on('change', function(event) {
+    console.log('miniFullScreen.on(change):', event);
+  });
+
+  miniFullScreen.on('error', function(event) {
+    console.log('miniFullScreen.on(error):', event);
+  });
+
+  document.getElementById('action-start').addEventListener('click', function() {
+    var result = miniFullScreen.start(htmlElement);
+    printStatus(result);
+  });
+
+  document.getElementById('action-stop').addEventListener('click', function() {
+    var result = miniFullScreen.stop(htmlElement);
+    printStatus(result);
+  });
+
+  document.getElementById('action-toggle').addEventListener('click', function() {
+    var result = miniFullScreen.toggle(htmlElement);
+    printStatus(result);
+  });
+
+}
+```
+
+
+It also sets global variable `window.miniFullScreen` (if global `window` object exists) to itself.
 
 
 ## Credits

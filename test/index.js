@@ -13,11 +13,11 @@ describe('mini-fullscreen', function () {
 
   });
 
-  beforeEach('before', function () {
+  beforeEach('beforeEach', function () {
 
   });
 
-  afterEach('after', function () {
+  afterEach('afterEach', function () {
 
   });
 

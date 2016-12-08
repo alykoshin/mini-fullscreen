@@ -22,16 +22,16 @@ var FullScreen = function() {
 
   /**
    *
-   * @param evt
+   * @param event
    */
-  function onFullScreenChange(evt) {
-    //console.log('FullScreen: onFullScreenChange(): evt:', evt );
-    self.emit('change', evt);
+  function onFullScreenChange(event) {
+    //console.log('FullScreen: onFullScreenChange(): event:', event );
+    self.emit('change', event);
   }
 
-  function onFullScreenError(evt) {
-    //console.log('FullScreen: onFullScreenError(): evt:', evt );
-    self.emit('error', evt);
+  function onFullScreenError(event) {
+    //console.log('FullScreen: onFullScreenError(): event:', event );
+    self.emit('error', event);
   }
 
   [
@@ -39,8 +39,8 @@ var FullScreen = function() {
     'msfullscreenchange',
     'mozfullscreenchange',
     'webkitfullscreenchange'
-  ].forEach( function(item, index, array) {
-      document.addEventListener(item, onFullScreenChange);
+  ].forEach( function(eventName, index, array) {
+      document.addEventListener(eventName, onFullScreenChange);
     });
 
   [
@@ -48,14 +48,9 @@ var FullScreen = function() {
     'msfullscreenerror',
     'mozfullscreenerror',
     'webkitfullscreenerror'
-  ].forEach( function(item, index, array) {
-      document.addEventListener(item, onFullScreenError);
+  ].forEach( function(eventName, index, array) {
+      document.addEventListener(eventName, onFullScreenError);
     });
-
-  document.addEventListener('fullscreenchange',       onFullScreenError);
-  document.addEventListener('msfullscreenchange',     onFullScreenError);
-  document.addEventListener('mozfullscreenchange',    onFullScreenError);
-  document.addEventListener('webkitfullscreenchange', onFullScreenError);
 
   /**
    * Start Full Screen Mode
